@@ -1,0 +1,39 @@
+{
+	"menu": {
+		"items": [
+			{
+				"title": "Home",
+				"icon": "home.png",
+				"screen-id": "dashboard"
+			},
+            {
+                "title": "Other",
+                "icon": "other.png",
+                "screen-id": "other"
+            }
+		]
+	},
+	"screens": [
+		{
+			"id": "dashboard",
+            "type": "table",
+            "query": "query {viewer {repositories(last: 10) {nodes {name,description}}}}",
+            "path-to-list": "data.viewer.repositories.nodes",
+            "cell-keys": {
+                "title": "name",
+                "subtitle": "description"
+            }
+		},
+        {
+            "id": "other",
+            "type": "table",
+            "query": "{viewer {following(first: 10) {nodes {name,avatarUrl,company}}}}",
+            "path-to-list": "data.viewer.following.nodes",
+            "cell-keys": {
+                "title": "name",
+                "imageUrl": "avatarUrl",
+                "subtitle": "company"
+            }
+        }
+	]
+}
