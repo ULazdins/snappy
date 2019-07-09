@@ -26,12 +26,12 @@ class MainTableViewController: UITableViewController {
     private func setSourceFrom(data: [String: Any]) {
         let keys = screen.pathToList.split(separator: ".").map(String.init)
         
-        var unwrappedData = data
-        for key in keys.dropLast(1) {
-            print(key)
-            unwrappedData = unwrappedData[key] as! [String: Any]
-            print(unwrappedData)
-        }
+        let unwrappedData = keys
+            .dropLast(1)
+            .reduce(data) { (data, key) -> [String: Any] in
+                return data[key] as! [String: Any]
+            }
+        
         
         let a = unwrappedData[keys.last!] as! [[String: Any]]
         
@@ -62,9 +62,29 @@ class MainTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = UITableViewCell.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
         cell.textLabel?.text = source[indexPath.row].title
         cell.detailTextLabel?.text = source[indexPath.row].title
+        cell.imageView!.image = UIImage(named: "person.png")!
+        source[indexPath.row].imageUrl.flatMap(URL.init(string:)).map { cell.imageView?.downloadImage(from: $0) }
         return cell
+    }
+}
+
+extension UIImageView {
+    func downloadImage(from url: URL) {
+        DispatchQueue.global(qos: .background).async {
+            print("Download Started")
+            
+            let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+                guard let data = data, error == nil else { return }
+                print("Download Finished")
+                DispatchQueue.main.async() {
+                    self.image = UIImage(data: data)
+                }
+            })
+            
+            task.resume()
+        }
     }
 }
