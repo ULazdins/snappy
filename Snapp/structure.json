@@ -1,21 +1,21 @@
 {
 	"menu": {
-		"items": [
-			{
-				"title": "Home",
-				"icon": "home.png",
-				"screen-id": "dashboard"
-			},
+        "items": [
             {
                 "title": "Other",
                 "icon": "other.png",
-                "screen-id": "other"
-            }
+                "screen-id": "following"
+            },
+			{
+				"title": "Home",
+				"icon": "home.png",
+				"screen-id": "repos"
+			}
 		]
 	},
 	"screens": [
 		{
-			"id": "dashboard",
+			"id": "repos",
             "type": "table",
             "query": "query {viewer {repositories(last: 10) {nodes {name,description}}}}",
             "path-to-list": "data.viewer.repositories.nodes",
@@ -25,7 +25,7 @@
             }
 		},
         {
-            "id": "other",
+            "id": "following",
             "type": "table",
             "query": "{viewer {following(first: 10) {nodes {name,avatarUrl,company}}}}",
             "path-to-list": "data.viewer.following.nodes",
@@ -34,6 +34,20 @@
                 "imageUrl": "avatarUrl",
                 "subtitle": "company"
             }
+        },
+        {
+            "id": "person",
+            "type": "details-stack",
+            "title":"username",
+            "query": "{user(login:\"<username>\") {id, name, bio, company, email, organizations(first: 10) {edges {node {id,name}}}}}",
+            "params": ["username", "image", "title"],
+            "path-to-details": "data.user",
+            "stackItems": [
+                {
+                    "type": "stackCellTitle",
+                    "title": "name"
+                }
+            ]
         }
 	]
 }

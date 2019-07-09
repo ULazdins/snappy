@@ -22,7 +22,11 @@
 		FD25614A22D4ED070056F8C0 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25614922D4ED070056F8C0 /* MainMenu.swift */; };
 		FD25614C22D4F15F0056F8C0 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25614B22D4F15F0056F8C0 /* MainTableViewController.swift */; };
 		FD25614E22D4F2FC0056F8C0 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25614D22D4F2FC0056F8C0 /* GithubClient.swift */; };
+		FD25615022D51A610056F8C0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25614F22D51A610056F8C0 /* DetailsViewController.swift */; };
 		FD25615222D51F870056F8C0 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615122D51F870056F8C0 /* Utilities.swift */; };
+		FD25615622D5257E0056F8C0 /* Plymorphic decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */; };
+		FD25615822D526500056F8C0 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615722D526500056F8C0 /* Screens.swift */; };
+		FD25615A22D52B950056F8C0 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615922D52B950056F8C0 /* Screens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +74,11 @@
 		FD25614922D4ED070056F8C0 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		FD25614B22D4F15F0056F8C0 /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		FD25614D22D4F2FC0056F8C0 /* GithubClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
+		FD25614F22D51A610056F8C0 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		FD25615122D51F870056F8C0 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plymorphic decoder.swift"; sourceTree = "<group>"; };
+		FD25615722D526500056F8C0 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
+		FD25615922D52B950056F8C0 /* Screens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +167,7 @@
 				FD25612122D4E4770056F8C0 /* Info.plist */,
 				FD25614D22D4F2FC0056F8C0 /* GithubClient.swift */,
 				FD25615122D51F870056F8C0 /* Utilities.swift */,
+				FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */,
 			);
 			path = Snapp;
 			sourceTree = "<group>";
@@ -185,6 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				FD25614422D4E5340056F8C0 /* Structure.swift */,
+				FD25615722D526500056F8C0 /* Screens.swift */,
+				FD25615922D52B950056F8C0 /* Screens.swift */,
 			);
 			path = StructureModels;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 				FD25611722D4E4760056F8C0 /* ViewController.swift */,
 				FD25614922D4ED070056F8C0 /* MainMenu.swift */,
 				FD25614B22D4F15F0056F8C0 /* MainTableViewController.swift */,
+				FD25614F22D51A610056F8C0 /* DetailsViewController.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -458,12 +470,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD25611822D4E4760056F8C0 /* ViewController.swift in Sources */,
+				FD25615822D526500056F8C0 /* Screens.swift in Sources */,
 				FD25611622D4E4760056F8C0 /* AppDelegate.swift in Sources */,
 				FD25614522D4E5340056F8C0 /* Structure.swift in Sources */,
 				FD25614E22D4F2FC0056F8C0 /* GithubClient.swift in Sources */,
+				FD25615022D51A610056F8C0 /* DetailsViewController.swift in Sources */,
 				FD25614C22D4F15F0056F8C0 /* MainTableViewController.swift in Sources */,
 				FD25615222D51F870056F8C0 /* Utilities.swift in Sources */,
+				FD25615622D5257E0056F8C0 /* Plymorphic decoder.swift in Sources */,
 				FD25614A22D4ED070056F8C0 /* MainMenu.swift in Sources */,
+				FD25615A22D52B950056F8C0 /* Screens.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

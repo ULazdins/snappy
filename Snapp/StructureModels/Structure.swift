@@ -22,9 +22,6 @@ struct Menu: Decodable {
     let items: [MenuItem]
 }
 
-enum ScreenType: String, Decodable {
-    case Table = "table"
-}
 
 struct CellKeys: Decodable {
     let title: String
@@ -32,24 +29,19 @@ struct CellKeys: Decodable {
     let imageUrl: String?
 }
 
-struct Screen: Decodable {
-    let id: String
-    let type: ScreenType
-    let query: String
-    let pathToList: String
-    let cellKeys: CellKeys
-    
-    enum CodingKeys : String, CodingKey {
-        case id
-        case type
-        case query
-        case pathToList = "path-to-list"
-        case cellKeys = "cell-keys"
-    }
-}
-
-struct Structure: Decodable {
+class Structure: Decodable {
     let menu: Menu
     let screens: [Screen]
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: PersonCodingKeys.self)
+        menu = try container.decode(Menu.self, forKey: .menu)
+        screens = try container.decode(family: ScreenFamily.self, forKey: .screens)
+    }
+    
+    enum PersonCodingKeys: String, CodingKey {
+        case menu
+        case screens
+    }
 }
 

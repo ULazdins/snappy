@@ -16,7 +16,7 @@ struct CellData {
 }
 
 class MainTableViewController: UITableViewController {
-    var screen: Screen!
+    var screen: TableScreen!
     private var source: [CellData] = [] {
         didSet {
             self.tableView.reloadData()
