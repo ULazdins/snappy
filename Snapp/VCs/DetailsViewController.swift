@@ -10,8 +10,11 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     var screen: DetailsStackScreen!
+    var mainTitle: String!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationItem.title = mainTitle
     }
 }

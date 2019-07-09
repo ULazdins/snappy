@@ -14,7 +14,7 @@ struct MenuItem: Decodable {
     
     enum CodingKeys : String, CodingKey {
         case title
-        case screenId = "screen-id"
+        case screenId
     }
 }
 
@@ -34,12 +34,12 @@ class Structure: Decodable {
     let screens: [Screen]
     
     required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: PersonCodingKeys.self)
+        let container = try decoder.container(keyedBy: StructureCodingKeys.self)
         menu = try container.decode(Menu.self, forKey: .menu)
         screens = try container.decode(family: ScreenFamily.self, forKey: .screens)
     }
     
-    enum PersonCodingKeys: String, CodingKey {
+    enum StructureCodingKeys: String, CodingKey {
         case menu
         case screens
     }

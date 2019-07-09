@@ -14,14 +14,21 @@ class Screen: Decodable {
     let query: String
 }
 
+class CellTapAction: Decodable {
+    let screenId: String
+    let params: [String: String]
+}
+
 class TableScreen: Screen {
     let pathToList: String
     let cellKeys: CellKeys
+    let cellTapAction: CellTapAction?
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         pathToList = try container.decode(String.self, forKey: .pathToList)
         cellKeys = try container.decode(CellKeys.self, forKey: .cellKeys)
+        cellTapAction = try? container.decode(CellTapAction.self, forKey: .cellTapAction)
         try super.init(from: decoder)
     }
     
@@ -29,8 +36,9 @@ class TableScreen: Screen {
         case id
         case type
         case query
-        case pathToList = "path-to-list"
-        case cellKeys = "cell-keys"
+        case pathToList
+        case cellKeys
+        case cellTapAction
     }
 }
 

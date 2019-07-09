@@ -4,12 +4,12 @@
             {
                 "title": "Other",
                 "icon": "other.png",
-                "screen-id": "following"
+                "screenId": "following"
             },
 			{
 				"title": "Home",
 				"icon": "home.png",
-				"screen-id": "repos"
+				"screenId": "repos"
 			}
 		]
 	},
@@ -18,8 +18,8 @@
 			"id": "repos",
             "type": "table",
             "query": "query {viewer {repositories(last: 10) {nodes {name,description}}}}",
-            "path-to-list": "data.viewer.repositories.nodes",
-            "cell-keys": {
+            "pathToList": "data.viewer.repositories.nodes",
+            "cellKeys": {
                 "title": "name",
                 "subtitle": "description"
             }
@@ -27,12 +27,18 @@
         {
             "id": "following",
             "type": "table",
-            "query": "{viewer {following(first: 10) {nodes {name,avatarUrl,company}}}}",
-            "path-to-list": "data.viewer.following.nodes",
-            "cell-keys": {
+            "query": "{viewer {following(first: 10) {nodes {name,avatarUrl,company,login}}}}",
+            "pathToList": "data.viewer.following.nodes",
+            "cellKeys": {
                 "title": "name",
                 "imageUrl": "avatarUrl",
                 "subtitle": "company"
+            },
+            "cellTapAction": {
+                "screenId": "person",
+                "params": {
+                    "title": "login"
+                }
             }
         },
         {
@@ -40,12 +46,12 @@
             "type": "details-stack",
             "title":"username",
             "query": "{user(login:\"<username>\") {id, name, bio, company, email, organizations(first: 10) {edges {node {id,name}}}}}",
-            "params": ["username", "image", "title"],
-            "path-to-details": "data.user",
+            "params": ["username"],
+            "pathToDetails": "data.user",
             "stackItems": [
                 {
-                    "type": "stackCellTitle",
-                    "title": "name"
+                    "type": "label",
+                    "text": "company"
                 }
             ]
         }

@@ -22,7 +22,7 @@ class ViewController: UINavigationController {
             })
             .flatMap { (data) -> Structure? in
                 try! JSONDecoder().decode(Structure.self, from: data)
-        }
+            }
         
         let root = MainMenu()
         root.structure = structure
