@@ -26,14 +26,14 @@ class MainTableViewController: UITableViewController {
     private func setSourceFrom(data: [String: Any]) {
         let keys = screen.pathToList.split(separator: ".").map(String.init)
         
-        let unwrappedData = keys
+        let a = keys
             .dropLast(1)
             .reduce(data) { (data, key) -> [String: Any] in
                 return data[key] as! [String: Any]
             }
-        
-        
-        let a = unwrappedData[keys.last!] as! [[String: Any]]
+            ==> {
+                $0[keys.last!] as! [[String: Any]]
+            }
         
         source = a.map({ (aa) -> CellData in
             return CellData(
@@ -68,23 +68,5 @@ class MainTableViewController: UITableViewController {
         cell.imageView!.image = UIImage(named: "person.png")!
         source[indexPath.row].imageUrl.flatMap(URL.init(string:)).map { cell.imageView?.downloadImage(from: $0) }
         return cell
-    }
-}
-
-extension UIImageView {
-    func downloadImage(from url: URL) {
-        DispatchQueue.global(qos: .background).async {
-            print("Download Started")
-            
-            let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-                guard let data = data, error == nil else { return }
-                print("Download Finished")
-                DispatchQueue.main.async() {
-                    self.image = UIImage(data: data)
-                }
-            })
-            
-            task.resume()
-        }
     }
 }
