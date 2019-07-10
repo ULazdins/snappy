@@ -33,6 +33,16 @@ class MainMenu: UITabBarController {
             }
         })
         
+        self.title = viewControllers?.first?.tabBarItem.title
+        
+        self.delegate = self
+        
         super.viewWillAppear(animated)
+    }
+}
+
+extension MainMenu: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        self.title = viewController.tabBarItem.title
     }
 }
