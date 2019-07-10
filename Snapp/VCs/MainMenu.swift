@@ -21,12 +21,12 @@ class MainMenu: UITabBarController {
                 let vc = MainTableViewController()
                 vc.screen = screen
                 vc.structure = structure
-                vc.tabBarItem = UITabBarItem(title: menuItem.title, image: nil, tag: 0)
+                vc.tabBarItem = UITabBarItem(title: menuItem.title, image: menuItem.iconName.map(UIImage.init), tag: 0)
                 return vc
             case let screen as DetailsStackScreen:
                 let vc = DetailsViewController()
                 vc.screen = screen
-                vc.tabBarItem = UITabBarItem(title: menuItem.title, image: nil, tag: 0)
+                vc.tabBarItem = UITabBarItem(title: menuItem.title, image: menuItem.iconName.map(UIImage.init), tag: 0)
                 return vc
             default:
                 abort()

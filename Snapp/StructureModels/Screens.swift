@@ -12,6 +12,7 @@ import Foundation
 class Screen: Decodable {
     let id: String
     let query: String
+    let title: String
 }
 
 class CellTapAction: Decodable {

@@ -3,12 +3,12 @@
         "items": [
             {
                 "title": "Other",
-                "icon": "other.png",
+                "iconName": "favorite.png",
                 "screenId": "following"
             },
 			{
 				"title": "Home",
-				"icon": "home.png",
+				"iconName": "pets.png",
 				"screenId": "repos"
 			}
 		]
@@ -17,6 +17,7 @@
 		{
 			"id": "repos",
             "type": "table",
+            "title":"Repozitoriji",
             "query": "query {viewer {repositories(last: 20) {nodes {name,description}}}}",
             "pathToList": "data.viewer.repositories.nodes",
             "cellKeys": {
@@ -27,6 +28,7 @@
         {
             "id": "following",
             "type": "table",
+            "title":"Tu seko",
             "query": "{viewer {following(first: 20) {nodes {name,avatarUrl,company,login}}}}",
             "pathToList": "data.viewer.following.nodes",
             "cellKeys": {

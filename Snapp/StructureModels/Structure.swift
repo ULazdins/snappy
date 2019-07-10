@@ -10,10 +10,12 @@ import Foundation
 
 struct MenuItem: Decodable {
     let title: String
+    let iconName: String?
     let screenId: String
     
     enum CodingKeys : String, CodingKey {
         case title
+        case iconName
         case screenId
     }
 }
