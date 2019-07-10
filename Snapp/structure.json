@@ -17,7 +17,7 @@
 		{
 			"id": "repos",
             "type": "table",
-            "query": "query {viewer {repositories(last: 10) {nodes {name,description}}}}",
+            "query": "query {viewer {repositories(last: 20) {nodes {name,description}}}}",
             "pathToList": "data.viewer.repositories.nodes",
             "cellKeys": {
                 "title": "name",
@@ -27,7 +27,7 @@
         {
             "id": "following",
             "type": "table",
-            "query": "{viewer {following(first: 10) {nodes {name,avatarUrl,company,login}}}}",
+            "query": "{viewer {following(first: 20) {nodes {name,avatarUrl,company,login}}}}",
             "pathToList": "data.viewer.following.nodes",
             "cellKeys": {
                 "title": "name",
@@ -51,7 +51,7 @@
             "stackItems": [
                 {
                     "type": "label",
-                    "text": "company"
+                    "textKey": "company"
                 }
             ]
         }

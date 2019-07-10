@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 /*
  TODO:
- - navigācija uz child skatu
  - stilojamība
  - peek and pop
  - vēl viens kartiņu stils
