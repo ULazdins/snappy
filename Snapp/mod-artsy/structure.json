@@ -1,5 +1,9 @@
 {
     "graphQlUrl": "https://metaphysics-production.artsy.net",
+    "theme": {
+        "primaryColor": "#FFFFFF",
+        "secondaryColor": "#381088"
+    },
 	"menu": {
         "items": [
             {

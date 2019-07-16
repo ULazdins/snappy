@@ -27,6 +27,8 @@
 		FD25615622D5257E0056F8C0 /* Plymorphic decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */; };
 		FD25615822D526500056F8C0 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615722D526500056F8C0 /* Screens.swift */; };
 		FD3FBE3F22DE29EC00412E88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3FBE3D22DE29E900412E88 /* LaunchScreen.storyboard */; };
+		FD3FBE4122DE3DC800412E88 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */; };
+		FD3FBE4222DE487400412E88 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */; };
 		FD9ED50D22D6739F0010C8CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611722D4E4760056F8C0 /* ViewController.swift */; };
 		FD9ED50E22D6739F0010C8CE /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615722D526500056F8C0 /* Screens.swift */; };
 		FD9ED50F22D6739F0010C8CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611522D4E4760056F8C0 /* AppDelegate.swift */; };
@@ -93,6 +95,7 @@
 		FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plymorphic decoder.swift"; sourceTree = "<group>"; };
 		FD25615722D526500056F8C0 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		FD3FBE3E22DE29E900412E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		FD9ED50822D671230010C8CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD9ED50922D671230010C8CE /* structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = structure.json; sourceTree = "<group>"; };
 		FD9ED52222D6739F0010C8CE /* Artsy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artsy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +198,7 @@
 				FD25611922D4E4770056F8C0 /* Main.storyboard */,
 				FD25615522D5257E0056F8C0 /* Plymorphic decoder.swift */,
 				FD25615122D51F870056F8C0 /* Utilities.swift */,
+				FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */,
 			);
 			path = Snapp;
 			sourceTree = "<group>";
@@ -593,6 +597,7 @@
 				FD25615022D51A610056F8C0 /* DetailsViewController.swift in Sources */,
 				FD25614C22D4F15F0056F8C0 /* MainTableViewController.swift in Sources */,
 				FD25615222D51F870056F8C0 /* Utilities.swift in Sources */,
+				FD3FBE4122DE3DC800412E88 /* UIColor+Extensions.swift in Sources */,
 				FD25615622D5257E0056F8C0 /* Plymorphic decoder.swift in Sources */,
 				FD25614A22D4ED070056F8C0 /* MainMenu.swift in Sources */,
 			);
@@ -626,6 +631,7 @@
 				FD9ED51222D6739F0010C8CE /* DetailsViewController.swift in Sources */,
 				FD9ED51322D6739F0010C8CE /* MainTableViewController.swift in Sources */,
 				FD9ED51422D6739F0010C8CE /* Utilities.swift in Sources */,
+				FD3FBE4222DE487400412E88 /* UIColor+Extensions.swift in Sources */,
 				FD9ED51522D6739F0010C8CE /* Plymorphic decoder.swift in Sources */,
 				FD9ED51622D6739F0010C8CE /* MainMenu.swift in Sources */,
 			);

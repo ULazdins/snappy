@@ -11,23 +11,40 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
+    private var structure: Structure!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let mainColor = UIColor(red: 242.0/255.0, green: 101.0/255.0, blue: 34.0/255.0, alpha: 1.0)
-        let secondaryColor = UIColor(red: 34.0/255.0, green: 128.0/255.0, blue: 66.0/255.0, alpha: 1.0)
-        let barStyle: UIBarStyle = .black
+        structure = Bundle.main.path(forResource: "structure", ofType: "json")
+            .flatMap({ (path) -> URL? in
+                return URL(fileURLWithPath: path)
+            })
+            .flatMap({ (url) -> Data? in
+                return try! Data(contentsOf: url)
+            })
+            .flatMap { (data) -> Structure? in
+                try! JSONDecoder().decode(Structure.self, from: data)
+            }
+        
+        let mainColor = UIColor(hex: structure.theme.primaryColor)
+        let secondaryColor = UIColor(hex: structure.theme.secondaryColor)
         
         application.delegate?.window??.tintColor = mainColor
         
-        UINavigationBar.appearance().barStyle = barStyle
+        UINavigationBar.appearance().barTintColor = secondaryColor
+        UINavigationBar.appearance().tintColor = mainColor
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
+
 //        UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .Default)
         
         UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
         
         
-        UITabBar.appearance().barStyle = barStyle
+        UITabBar.appearance().barTintColor = secondaryColor
+        UITabBar.appearance().tintColor = mainColor
 //        UITabBar.appearance().backgroundImage = tabBarBackgroundImage
         
         let tabIndicator = UIImage(named: "tabBarSelectionIndicator")?.withRenderingMode(.alwaysTemplate)

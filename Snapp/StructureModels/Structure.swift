@@ -7,6 +7,12 @@
 //
 
 import Foundation
+import UIKit
+
+struct Theme: Decodable {
+    let primaryColor: String
+    let secondaryColor: String
+}
 
 struct MenuItem: Decodable {
     let title: String
@@ -32,6 +38,7 @@ struct CellKeys: Decodable {
 }
 
 class Structure: Decodable {
+    let theme: Theme
     let graphQlUrl: String
     let graphQlAuthToken: String?
     let menu: Menu
@@ -39,6 +46,7 @@ class Structure: Decodable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: StructureCodingKeys.self)
+        theme = try container.decode(Theme.self, forKey: .theme)
         graphQlUrl = try container.decode(String.self, forKey: .graphQlUrl)
         graphQlAuthToken = try? container.decode(String.self, forKey: .graphQlAuthToken)
         menu = try container.decode(Menu.self, forKey: .menu)
@@ -46,6 +54,7 @@ class Structure: Decodable {
     }
     
     enum StructureCodingKeys: String, CodingKey {
+        case theme
         case graphQlUrl
         case graphQlAuthToken
         case menu
