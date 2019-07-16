@@ -32,16 +32,22 @@ struct CellKeys: Decodable {
 }
 
 class Structure: Decodable {
+    let graphQlUrl: String
+    let graphQlAuthToken: String?
     let menu: Menu
     let screens: [Screen]
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: StructureCodingKeys.self)
+        graphQlUrl = try container.decode(String.self, forKey: .graphQlUrl)
+        graphQlAuthToken = try? container.decode(String.self, forKey: .graphQlAuthToken)
         menu = try container.decode(Menu.self, forKey: .menu)
         screens = try container.decode(family: ScreenFamily.self, forKey: .screens)
     }
     
     enum StructureCodingKeys: String, CodingKey {
+        case graphQlUrl
+        case graphQlAuthToken
         case menu
         case screens
     }

@@ -1,5 +1,5 @@
 //
-//  GithubClient.swift
+//  GraphQlClient.swift
 //  Snapp
 //
 //  Created by Uģis Lazdiņš on 09/07/2019.
@@ -9,19 +9,29 @@
 import RxSwift
 import RxCocoa
 
-class GithubClient {
+class GraphQlClient {
+    let graphQlUrl: String
+    let bearerToken: String?
+    
+    init(graphQlUrl: String, bearerToken: String?) {
+        self.graphQlUrl = graphQlUrl
+        self.bearerToken = bearerToken
+    }
+    
     private func dataToJson(data: Data) -> [String: Any] {
         return (try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any])!
     }
     
     func fetchData(query: String) -> Observable<[String: Any]> {
-        let r = NSMutableURLRequest(url: URL.init(string: "https://api.github.com/graphql")!)
+        let r = NSMutableURLRequest(url: URL(string: graphQlUrl)!)
         r.httpMethod = "POST"
-        r.setValue("Bearer 02fbffadfd9586e8216b30cf6bc6b81080c48e97", forHTTPHeaderField: "Authorization")
+        r.setValue(bearerToken.map({ "Bearer \($0)" }) ?? "", forHTTPHeaderField: "Authorization")
+        r.setValue("application/json", forHTTPHeaderField: "Content-Type")
         r.httpBody = "{\"query\": \"\(query)\"}".data(using: .utf8)
         
         return Observable.create { (observer) -> Disposable in
             let task = URLSession.shared.dataTask(with: r as URLRequest) { (data, response, error) in
+                print(String(data: data!, encoding: .utf8))
                 observer.on(.next(self.dataToJson(data: data!)))
                 observer.on(.completed)
             }

@@ -1,0 +1,62 @@
+{
+    "graphQlUrl": "https://metaphysics-production.artsy.net",
+	"menu": {
+        "items": [
+            {
+                "title": "Artworks",
+                "iconName": "favorite.png",
+                "screenId": "artworks"
+            },
+			{
+				"title": "Home",
+				"iconName": "pets.png",
+				"screenId": "repos"
+			}
+		]
+	},
+	"screens": [
+		{
+			"id": "repos",
+            "type": "table",
+            "title":"Repozitoriji",
+            "query": "query {viewer {repositories(last: 20) {nodes {name,description}}}}",
+            "pathToList": "data.viewer.repositories.nodes",
+            "cellKeys": {
+                "title": "name",
+                "subtitle": "description"
+            }
+		},
+        {
+            "id": "artworks",
+            "type": "table",
+            "title":"Mākslas darbi",
+            "query": "{artworks {id,title,artist{name,id},description,imageUrl}}",
+            "pathToList": "data.artworks",
+            "cellKeys": {
+                "title": "title",
+                "imageUrl": "imageUrl",
+                "subtitle": "id"
+            },
+            "cellTapAction": {
+                "screenId": "person",
+                "params": {
+                    "title": "login"
+                }
+            }
+        },
+        {
+            "id": "person",
+            "type": "details-stack",
+            "title":"username",
+            "query": "{user(login:\"<username>\") {id, name, bio, company, email, organizations(first: 10) {edges {node {id,name}}}}}",
+            "params": ["username"],
+            "pathToDetails": "data.user",
+            "stackItems": [
+                {
+                    "type": "label",
+                    "textKey": "company"
+                }
+            ]
+        }
+	]
+}

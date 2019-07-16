@@ -12,6 +12,7 @@ class MainMenu: UITabBarController {
     var structure: Structure! = nil
     
     override func viewWillAppear(_ animated: Bool) {
+        let graphQlClient = GraphQlClient(graphQlUrl: structure.graphQlUrl, bearerToken: structure.graphQlAuthToken)
         
         self.viewControllers = structure.menu.items.compactMap({ (menuItem) -> UIViewController? in
             let screen = structure.screens.first {$0.id == menuItem.screenId }
@@ -21,6 +22,7 @@ class MainMenu: UITabBarController {
                 let vc = MainTableViewController()
                 vc.screen = screen
                 vc.structure = structure
+                vc.graphQlClient = graphQlClient
                 vc.tabBarItem = UITabBarItem(title: menuItem.title, image: menuItem.iconName.map(UIImage.init), tag: 0)
                 return vc
             case let screen as DetailsStackScreen:

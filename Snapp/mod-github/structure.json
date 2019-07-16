@@ -1,5 +1,7 @@
 {
-	"menu": {
+    "graphQlUrl": "https://api.github.com/graphql",
+    "graphQlAuthToken": "02fbffadfd9586e8216b30cf6bc6b81080c48e97",
+    "menu": {
         "items": [
             {
                 "title": "Other",

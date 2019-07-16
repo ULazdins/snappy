@@ -19,6 +19,7 @@ struct CellData {
 class MainTableViewController: UITableViewController {
     var screen: TableScreen!
     var structure: Structure!
+    var graphQlClient: GraphQlClient!
     private var source: [CellData] = [] {
         didSet {
             self.tableView.reloadData()
@@ -50,7 +51,7 @@ class MainTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        _ = GithubClient()
+        _ = graphQlClient!
             .fetchData(query: screen.query)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: self.setSourceFrom)
