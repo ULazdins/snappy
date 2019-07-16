@@ -59,8 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 /*
  TODO:
- - stilojamība
- - peek and pop
  - vēl viens kartiņu stils
  - pieejamība
  - drawer

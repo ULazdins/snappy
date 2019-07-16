@@ -55,8 +55,12 @@ class MainTableViewController: UITableViewController {
             .fetchData(query: screen.query)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: self.setSourceFrom)
+        
+        registerForPreviewing(with: self, sourceView: tableView)
     }
-    
+}
+
+extension MainTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -93,5 +97,36 @@ class MainTableViewController: UITableViewController {
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+}
+
+extension MainTableViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if let indexPath = tableView.indexPathForRow(at: location) {
+            previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
+            
+            guard let cellTapAction = screen.cellTapAction else { return nil }
+            
+            let target = structure.screens.first { (s) -> Bool in
+                s.id == cellTapAction.screenId
+            }
+            
+            if let target = target as? DetailsStackScreen {
+                let vc = DetailsViewController()
+                vc.screen = target
+                
+                let titleKey = cellTapAction.params["title"] ?? ""
+                let cellInfo = source[indexPath.row]
+                vc.mainTitle = cellInfo.rawData[titleKey] as? String
+                
+                return vc
+            }
+        }
+        
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
 }
