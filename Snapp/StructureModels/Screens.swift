@@ -44,8 +44,16 @@ class TableScreen: Screen {
 }
 
 class DetailsStackScreen: Screen {
+    let pathToDetails: String
+    
     required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        pathToDetails = try container.decode(String.self, forKey: .pathToDetails)
         try super.init(from: decoder)
+    }
+    
+    enum CodingKeys : String, CodingKey {
+        case pathToDetails
     }
 }
 

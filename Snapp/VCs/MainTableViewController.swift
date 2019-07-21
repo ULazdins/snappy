@@ -88,15 +88,23 @@ extension MainTableViewController {
         }
         
         if let target = target as? DetailsStackScreen {
-            let vc = DetailsViewController()
-            vc.screen = target
-            
-            let titleKey = cellTapAction.params["title"] ?? ""
-            let cellInfo = source[indexPath.row]
-            vc.mainTitle = cellInfo.rawData[titleKey] as? String
+            let vc = createDetailsStackScreen(target: target, cellInfo: source[indexPath.row], cellTapAction: cellTapAction)
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    private func createDetailsStackScreen(target: DetailsStackScreen, cellInfo: CellData, cellTapAction: CellTapAction) -> DetailsViewController {
+        let vc = DetailsViewController()
+        vc.screen = target
+        vc.graphQlClient = graphQlClient
+        
+        let titleKey = cellTapAction.params["title"] ?? ""
+        vc.mainTitle = cellInfo.rawData[titleKey] as? String
+        
+        vc.parameters = Dictionary(uniqueKeysWithValues: cellTapAction.params.map { key, value in (key, cellInfo.rawData[value] as? String ?? "")})
+        
+        return vc
     }
 }
 
@@ -107,19 +115,9 @@ extension MainTableViewController: UIViewControllerPreviewingDelegate {
             
             guard let cellTapAction = screen.cellTapAction else { return nil }
             
-            let target = structure.screens.first { (s) -> Bool in
-                s.id == cellTapAction.screenId
-            }
-            
+            let target = structure.screens.first { cellTapAction.screenId == $0.id }
             if let target = target as? DetailsStackScreen {
-                let vc = DetailsViewController()
-                vc.screen = target
-                
-                let titleKey = cellTapAction.params["title"] ?? ""
-                let cellInfo = source[indexPath.row]
-                vc.mainTitle = cellInfo.rawData[titleKey] as? String
-                
-                return vc
+                return createDetailsStackScreen(target: target, cellInfo: source[indexPath.row], cellTapAction: cellTapAction)
             }
         }
         

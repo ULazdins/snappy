@@ -1,6 +1,6 @@
 {
     "graphQlUrl": "https://api.github.com/graphql",
-    "graphQlAuthToken": "02fbffadfd9586e8216b30cf6bc6b81080c48e97",
+    "graphQlAuthToken": "4e7bd1ea4d3b0d3f4f36695fa34e93253f704239",
     "theme": {
         "primaryColor": "#000000",
         "secondaryColor": "#f6f8fa"
@@ -45,7 +45,8 @@
             "cellTapAction": {
                 "screenId": "person",
                 "params": {
-                    "title": "login"
+                    "title": "name",
+                    "username": "login"
                 }
             }
         },
@@ -53,8 +54,8 @@
             "id": "person",
             "type": "details-stack",
             "title":"username",
-            "query": "{user(login:\"<username>\") {id, name, bio, company, email, organizations(first: 10) {edges {node {id,name}}}}}",
             "params": ["username"],
+            "query": "{user(login:\"<username>\") {id, name, bio, company, avatarUrl, email, organizations(first: 10) {edges {node {id,name}}}}}",
             "pathToDetails": "data.user",
             "stackItems": [
                 {

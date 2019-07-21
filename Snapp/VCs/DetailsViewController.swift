@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 class DetailsViewController: UIViewController {
     var screen: DetailsStackScreen!
+    var parameters: [String: String] = [:]
     var mainTitle: String!
+    var graphQlClient: GraphQlClient!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -23,10 +26,41 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let pattern = #"(<\w+>)"#
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let fullRange = NSRange(screen.query.startIndex..<screen.query.endIndex, in: screen.query)
+        let matches = regex.matches(in: screen.query, options: [], range: fullRange)
+        
+        var query = screen.query
+        for match in matches {
+            let firstCaptureRange: Range<String.Index> = Range(match.range(at: 1), in: query)!
+            let placeholder = (query)[firstCaptureRange]
+            let key: String = String(placeholder.dropFirst().dropLast())
+            let value = parameters[key] ?? ""
+            
+            query = query.replacingOccurrences(of: placeholder, with: value)
+        }
+        
+        _ = graphQlClient!
+            .fetchData(query: query)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (data) in
+                let keys = self.screen.pathToDetails.split(separator: ".").map(String.init)
+                
+                let a = keys
+                    .reduce(data) { (data, key) -> [String: Any] in
+                        return data[key] as! [String: Any]
+                    }
+                
+                (a["avatarUrl"] as? String)
+                    .flatMap(URL.init(string:))
+                    .map(self.imageView!.downloadImage)
+            })
+        
         scrollView.delegate = self
         
         imageView = UIImageView()
-        c = imageView.heightAnchor.constraint(equalToConstant: 200)
+        c = imageView.heightAnchor.constraint(equalToConstant: 300)
         c.isActive = true
         imageView.image = UIImage(named: "person.png")
         
