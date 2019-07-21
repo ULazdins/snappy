@@ -24,12 +24,18 @@ class MainMenu: UITabBarController {
                 vc.structure = structure
                 vc.graphQlClient = graphQlClient
                 vc.tabBarItem = UITabBarItem(title: menuItem.title, image: menuItem.iconName.map(UIImage.init), tag: 0)
-                return vc
+                
+                let nav = UINavigationController(rootViewController: vc)
+                
+                return nav
             case let screen as DetailsStackScreen:
                 let vc = DetailsViewController()
                 vc.screen = screen
                 vc.tabBarItem = UITabBarItem(title: menuItem.title, image: menuItem.iconName.map(UIImage.init), tag: 0)
-                return vc
+                
+                let nav = UINavigationController(rootViewController: vc)
+                
+                return nav
             default:
                 abort()
             }

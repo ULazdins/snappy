@@ -11,7 +11,6 @@
 		29F0601FCE3C09154714A5F4 /* Pods_SnappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB92B355A7D3D0A9DF8CBAC /* Pods_SnappUITests.framework */; };
 		E9C8979C0D7A8DEE14261A02 /* Pods_SnappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CFEBA8C034D7EAB7456E66E /* Pods_SnappTests.framework */; };
 		FD25611622D4E4760056F8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611522D4E4760056F8C0 /* AppDelegate.swift */; };
-		FD25611822D4E4760056F8C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611722D4E4760056F8C0 /* ViewController.swift */; };
 		FD25611B22D4E4770056F8C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD25611922D4E4770056F8C0 /* Main.storyboard */; };
 		FD25611D22D4E4770056F8C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD25611C22D4E4770056F8C0 /* Assets.xcassets */; };
 		FD25612022D4E4770056F8C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD25611E22D4E4770056F8C0 /* LaunchScreen.storyboard */; };
@@ -29,7 +28,6 @@
 		FD3FBE3F22DE29EC00412E88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3FBE3D22DE29E900412E88 /* LaunchScreen.storyboard */; };
 		FD3FBE4122DE3DC800412E88 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */; };
 		FD3FBE4222DE487400412E88 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3FBE4022DE3DC800412E88 /* UIColor+Extensions.swift */; };
-		FD9ED50D22D6739F0010C8CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611722D4E4760056F8C0 /* ViewController.swift */; };
 		FD9ED50E22D6739F0010C8CE /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25615722D526500056F8C0 /* Screens.swift */; };
 		FD9ED50F22D6739F0010C8CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25611522D4E4760056F8C0 /* AppDelegate.swift */; };
 		FD9ED51022D6739F0010C8CE /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25614422D4E5340056F8C0 /* Structure.swift */; };
@@ -74,7 +72,6 @@
 		DC2F7756D5CFC4880C7C4282 /* Pods-SnappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SnappTests.release.xcconfig"; path = "Target Support Files/Pods-SnappTests/Pods-SnappTests.release.xcconfig"; sourceTree = "<group>"; };
 		FD25611222D4E4760056F8C0 /* Snapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD25611522D4E4760056F8C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FD25611722D4E4760056F8C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FD25611A22D4E4770056F8C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD25611C22D4E4770056F8C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD25611F22D4E4770056F8C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -236,7 +233,6 @@
 				FD25614F22D51A610056F8C0 /* DetailsViewController.swift */,
 				FD25614922D4ED070056F8C0 /* MainMenu.swift */,
 				FD25614B22D4F15F0056F8C0 /* MainTableViewController.swift */,
-				FD25611722D4E4760056F8C0 /* ViewController.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -589,7 +585,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD25611822D4E4760056F8C0 /* ViewController.swift in Sources */,
 				FD25615822D526500056F8C0 /* Screens.swift in Sources */,
 				FD25611622D4E4760056F8C0 /* AppDelegate.swift in Sources */,
 				FD25614522D4E5340056F8C0 /* Structure.swift in Sources */,
@@ -623,7 +618,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD9ED50D22D6739F0010C8CE /* ViewController.swift in Sources */,
 				FD9ED50E22D6739F0010C8CE /* Screens.swift in Sources */,
 				FD9ED50F22D6739F0010C8CE /* AppDelegate.swift in Sources */,
 				FD9ED51022D6739F0010C8CE /* Structure.swift in Sources */,

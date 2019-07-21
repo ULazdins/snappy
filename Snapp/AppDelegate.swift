@@ -27,10 +27,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try! JSONDecoder().decode(Structure.self, from: data)
             }
         
+        setupStyle(structure: structure)
+        
+        let initialViewController = MainMenu()
+        initialViewController.structure = structure
+        
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        
+        return true
+    }
+    
+    private func setupStyle(structure: Structure) {
         let mainColor = UIColor(hex: structure.theme.primaryColor)
         let secondaryColor = UIColor(hex: structure.theme.secondaryColor)
         
-        application.delegate?.window??.tintColor = mainColor
+//        application.delegate?.window??.tintColor = mainColor
         
         UINavigationBar.appearance().prefersLargeTitles = structure.theme.prefersLargeTitles
         
@@ -38,8 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = mainColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
         UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
-
-//        UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .Default)
+        
+        //        UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .Default)
         
         UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
@@ -47,15 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITabBar.appearance().barTintColor = secondaryColor
         UITabBar.appearance().tintColor = mainColor
-//        UITabBar.appearance().backgroundImage = tabBarBackgroundImage
+        //        UITabBar.appearance().backgroundImage = tabBarBackgroundImage
         
         let tabIndicator = UIImage(named: "tabBarSelectionIndicator")?.withRenderingMode(.alwaysTemplate)
         let tabResizableIndicator = tabIndicator?.resizableImage(
             withCapInsets: UIEdgeInsets(top: 0, left: 2.0, bottom: 0, right: 2.0))
         UITabBar.appearance().selectionIndicatorImage = tabResizableIndicator
 
-        
-        return true
     }
 }
 
