@@ -2,7 +2,8 @@
     "graphQlUrl": "https://metaphysics-production.artsy.net",
     "theme": {
         "primaryColor": "#FFFFFF",
-        "secondaryColor": "#381088"
+        "secondaryColor": "#381088",
+        "prefersLargeTitles": false
     },
 	"menu": {
         "items": [

@@ -13,8 +13,6 @@ class ViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationBar.prefersLargeTitles = true
-        
         let structure = Bundle.main.path(forResource: "structure", ofType: "json")
             .flatMap({ (path) -> URL? in
                 return URL(fileURLWithPath: path)

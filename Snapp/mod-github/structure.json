@@ -3,7 +3,8 @@
     "graphQlAuthToken": "4e7bd1ea4d3b0d3f4f36695fa34e93253f704239",
     "theme": {
         "primaryColor": "#000000",
-        "secondaryColor": "#f6f8fa"
+        "secondaryColor": "#f6f8fa",
+        "prefersLargeTitles": true
     },
     "menu": {
         "items": [

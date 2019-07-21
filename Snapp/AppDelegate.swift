@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.delegate?.window??.tintColor = mainColor
         
+        UINavigationBar.appearance().prefersLargeTitles = structure.theme.prefersLargeTitles
+        
         UINavigationBar.appearance().barTintColor = secondaryColor
         UINavigationBar.appearance().tintColor = mainColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
@@ -60,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 /*
  TODO:
  - vēl viens kartiņu stils
+ - meklētājs
  - pieejamība
  - drawer
  - oauth login

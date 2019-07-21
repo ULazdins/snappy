@@ -12,6 +12,7 @@ import UIKit
 struct Theme: Decodable {
     let primaryColor: String
     let secondaryColor: String
+    let prefersLargeTitles: Bool
 }
 
 struct MenuItem: Decodable {
