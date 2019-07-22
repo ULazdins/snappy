@@ -42,7 +42,7 @@ class DetailsViewController: UIViewController {
         }
         
         _ = graphQlClient!
-            .fetchData(query: query)
+            .fetchData(request: GraphQlRequest(query: query))
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (data) in
                 let keys = self.screen.pathToDetails.split(separator: ".").map(String.init)

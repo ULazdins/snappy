@@ -76,4 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  - pieejamība
  - drawer
  - oauth login
+ - pagination
+ - bez-e example config
  */

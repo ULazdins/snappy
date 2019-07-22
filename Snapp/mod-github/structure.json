@@ -8,16 +8,21 @@
     },
     "menu": {
         "items": [
+			{
+				"title": "Home",
+				"iconName": "pets.png",
+				"screenId": "repos"
+			},
             {
                 "title": "Other",
                 "iconName": "favorite.png",
                 "screenId": "following"
             },
-			{
-				"title": "Home",
-				"iconName": "pets.png",
-				"screenId": "repos"
-			}
+            {
+                "title": "Search",
+                "iconName": "favorite.png",
+                "screenId": "allUsers"
+            }
 		]
 	},
 	"screens": [
@@ -42,6 +47,26 @@
                 "title": "name",
                 "imageUrl": "avatarUrl",
                 "subtitle": "company"
+            },
+            "cellTapAction": {
+                "screenId": "person",
+                "params": {
+                    "title": "name",
+                    "username": "login"
+                }
+            }
+        },
+        {
+            "id": "allUsers",
+            "type": "table",
+            "title":"Meklēt",
+            "query": "query($q:String!) { search(query: $q, type: USER, first: 10) { pageInfo {endCursor startCursor} edges {node {... on User { name, avatarUrl, company }}}}}",
+            "searchable": true,
+            "pathToList": "data.search.edges",
+            "cellKeys": {
+                "title": "node.name",
+                "imageUrl": "node.avatarUrl",
+                "subtitle": "node.company"
             },
             "cellTapAction": {
                 "screenId": "person",

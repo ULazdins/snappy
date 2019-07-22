@@ -21,12 +21,14 @@ class CellTapAction: Decodable {
 }
 
 class TableScreen: Screen {
+    let searchable: Bool
     let pathToList: String
     let cellKeys: CellKeys
     let cellTapAction: CellTapAction?
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        searchable = (try? container.decode(Bool.self, forKey: .searchable)) ?? false
         pathToList = try container.decode(String.self, forKey: .pathToList)
         cellKeys = try container.decode(CellKeys.self, forKey: .cellKeys)
         cellTapAction = try? container.decode(CellTapAction.self, forKey: .cellTapAction)
@@ -37,6 +39,7 @@ class TableScreen: Screen {
         case id
         case type
         case query
+        case searchable
         case pathToList
         case cellKeys
         case cellTapAction

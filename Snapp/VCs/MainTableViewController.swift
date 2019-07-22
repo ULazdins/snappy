@@ -16,6 +16,7 @@ struct CellData {
     let rawData: [String: Any]
 }
 
+
 class MainTableViewController: UITableViewController {
     var screen: TableScreen!
     var structure: Structure!
@@ -26,33 +27,36 @@ class MainTableViewController: UITableViewController {
         }
     }
     
+    var searchDisposable: Disposable? = nil
+    
     private func setSourceFrom(data: [String: Any]) {
-        let keys = screen.pathToList.split(separator: ".").map(String.init)
+        let listItem = data.getArray(at: screen.pathToList) ?? []
         
-        let a = keys
-            .dropLast(1)
-            .reduce(data) { (data, key) -> [String: Any] in
-                return data[key] as! [String: Any]
-            }
-            ==> {
-                $0[keys.last!] as! [[String: Any]]
-            }
-        
-        source = a.map({ (aa) -> CellData in
+        source = listItem.map({ (item) -> CellData in
             return CellData(
-                title: aa[screen.cellKeys.title] as? String ?? "",
-                subtitle: screen.cellKeys.subtitle.map { aa[$0] as? String ?? "" },
-                imageUrl: screen.cellKeys.imageUrl.map { aa[$0] as? String ?? "" },
-                rawData: aa
+                title: item.getValue(at: screen.cellKeys.title) ,
+                subtitle: screen.cellKeys.subtitle.map { item.getValue(at: $0) },
+                imageUrl: screen.cellKeys.imageUrl.map { item.getValue(at: $0) },
+                rawData: item
             )
         })
     }
     
+    lazy var searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        _ = graphQlClient!
-            .fetchData(query: screen.query)
+        navigationItem.title = screen.title
+        
+        if screen.searchable {
+            let search = UISearchController(searchResultsController: nil)
+            search.searchResultsUpdater = self
+            self.navigationItem.searchController = search
+        }
+        
+        searchDisposable = graphQlClient!
+            .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": ""]))
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: self.setSourceFrom)
         
@@ -126,5 +130,17 @@ extension MainTableViewController: UIViewControllerPreviewingDelegate {
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
+}
+
+extension MainTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print("Typed", searchController.searchBar.text)
+        
+        searchDisposable?.dispose()
+        searchDisposable = graphQlClient!
+            .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": searchController.searchBar.text ?? ""]))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: self.setSourceFrom)
     }
 }
