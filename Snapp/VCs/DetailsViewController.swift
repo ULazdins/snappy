@@ -45,14 +45,9 @@ class DetailsViewController: UIViewController {
             .fetchData(request: GraphQlRequest(query: query))
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (data) in
-                let keys = self.screen.pathToDetails.split(separator: ".").map(String.init)
+                let personDetails = data.getDict(at: self.screen.pathToDetails)
                 
-                let a = keys
-                    .reduce(data) { (data, key) -> [String: Any] in
-                        return data[key] as! [String: Any]
-                    }
-                
-                (a["avatarUrl"] as? String)
+                (personDetails?["avatarUrl"] as? String)
                     .flatMap(URL.init(string:))
                     .map(self.imageView!.downloadImage)
             })

@@ -72,10 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 /*
  TODO:
  - vēl viens kartiņu stils
- - meklētājs
+ - oauth login
+ - pogas - sekot/nesekot
  - pieejamība
  - drawer
- - oauth login
- - pagination
+ - pagination of search results
  - bez-e example config
  */

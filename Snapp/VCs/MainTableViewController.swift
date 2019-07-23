@@ -47,6 +47,8 @@ class MainTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        definesPresentationContext = true
+        
         navigationItem.title = screen.title
         
         if screen.searchable {
@@ -106,7 +108,7 @@ extension MainTableViewController {
         let titleKey = cellTapAction.params["title"] ?? ""
         vc.mainTitle = cellInfo.rawData[titleKey] as? String
         
-        vc.parameters = Dictionary(uniqueKeysWithValues: cellTapAction.params.map { key, value in (key, cellInfo.rawData[value] as? String ?? "")})
+        vc.parameters = Dictionary(uniqueKeysWithValues: cellTapAction.params.map { key, value in (key, cellInfo.rawData.getValue(at: value))})
         
         return vc
     }
@@ -137,10 +139,12 @@ extension MainTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         print("Typed", searchController.searchBar.text)
         
-        searchDisposable?.dispose()
-        searchDisposable = graphQlClient!
-            .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": searchController.searchBar.text ?? ""]))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: self.setSourceFrom)
+        if let query = searchController.searchBar.text, query.count > 0 {
+            searchDisposable?.dispose()
+            searchDisposable = graphQlClient!
+                .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": query]))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: self.setSourceFrom)
+        }
     }
 }
