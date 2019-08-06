@@ -13,7 +13,7 @@ struct CellData {
     let title: String
     let subtitle: String?
     let imageUrl: String?
-    let rawData: [String: Any]
+    let rawData: Any
 }
 
 
@@ -21,6 +21,7 @@ class MainTableViewController: UITableViewController {
     var screen: TableScreen!
     var structure: Structure!
     var graphQlClient: GraphQlClient!
+    var plainApiClient: PlainApiClient!
     private var source: [CellData] = [] {
         didSet {
             self.tableView.reloadData()
@@ -29,40 +30,59 @@ class MainTableViewController: UITableViewController {
     
     var searchDisposable: Disposable? = nil
     
-    private func setSourceFrom(data: [String: Any]) {
-        let listItem = data.getArray(at: screen.pathToList) ?? []
+    private func setSourceFrom(data: Any) {
+        let listItem = traverseJson(json: data, path: screen.pathToList) as? [Any] ?? []
         
         source = listItem.map({ (item) -> CellData in
             return CellData(
-                title: item.getValue(at: screen.cellKeys.title) ,
-                subtitle: screen.cellKeys.subtitle.map { item.getValue(at: $0) },
-                imageUrl: screen.cellKeys.imageUrl.map { item.getValue(at: $0) },
+                title: traverseJson(json: item, path: screen.cellKeys.title) as? String ?? "",
+                subtitle: screen.cellKeys.subtitle.flatMap { traverseJson(json: item, path: $0) as? String },
+                imageUrl: screen.cellKeys.imageUrl.flatMap { traverseJson(json: item, path: $0) as? String },
                 rawData: item
             )
         })
     }
     
+    var search: UISearchController {
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        if let textFieldInsideSearchBar = search.searchBar.value(forKey: "searchField") as? UITextField {
+            textFieldInsideSearchBar.textColor = UIColor(hex: structure.theme.secondaryColor)
+        }
+        return search
+    }
+    
     lazy var searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
     
+    var loaded = false
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         definesPresentationContext = true
         
-        navigationItem.title = screen.title
-        
-        if screen.searchable {
-            let search = UISearchController(searchResultsController: nil)
-            search.searchResultsUpdater = self
-            self.navigationItem.searchController = search
+        if !loaded {
+            navigationItem.title = screen.title
+            
+            if screen.searchable {
+                self.navigationItem.searchController = search
+            }
+            
+            if structure.graphQlUrl != nil {
+                searchDisposable = graphQlClient!
+                    .fetchData(request: GraphQlRequest(query: screen.query!, variables: ["q": ""]))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: self.setSourceFrom)
+            } else {
+                searchDisposable = plainApiClient!
+                    .fetchData(request: PlainApiRequest(path: screen.apiPath!))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: self.setSourceFrom)
+            }
         }
         
-        searchDisposable = graphQlClient!
-            .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": ""]))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: self.setSourceFrom)
-        
         registerForPreviewing(with: self, sourceView: tableView)
+        
+        loaded = true
     }
 }
 
@@ -76,10 +96,10 @@ extension MainTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = source[indexPath.row].title
-        cell.detailTextLabel?.text = source[indexPath.row].title
-        cell.imageView!.image = UIImage(named: "person.png")!
+        cell.detailTextLabel?.text = source[indexPath.row].subtitle
+        cell.imageView!.image = UIImage(named: "person.png")
         source[indexPath.row].imageUrl.flatMap(URL.init(string:)).map { cell.imageView?.downloadImage(from: $0) }
         return cell
     }
@@ -103,12 +123,17 @@ extension MainTableViewController {
     private func createDetailsStackScreen(target: DetailsStackScreen, cellInfo: CellData, cellTapAction: CellTapAction) -> DetailsViewController {
         let vc = DetailsViewController()
         vc.screen = target
+        vc.structure = structure
         vc.graphQlClient = graphQlClient
+        vc.plainApiClient = plainApiClient
         
         let titleKey = cellTapAction.params["title"] ?? ""
-        vc.mainTitle = cellInfo.rawData[titleKey] as? String
+        vc.mainTitle = traverseJson(json: cellInfo, path: titleKey) as? String
         
-        vc.parameters = Dictionary(uniqueKeysWithValues: cellTapAction.params.map { key, value in (key, cellInfo.rawData.getValue(at: value))})
+        vc.parameters = Dictionary(uniqueKeysWithValues: cellTapAction.params
+            .map { key, value in
+                (key, traverseJson(json: cellInfo.rawData, path: value) as? String ?? "")
+            })
         
         return vc
     }
@@ -141,10 +166,17 @@ extension MainTableViewController: UISearchResultsUpdating {
         
         if let query = searchController.searchBar.text, query.count > 0 {
             searchDisposable?.dispose()
-            searchDisposable = graphQlClient!
-                .fetchData(request: GraphQlRequest(query: screen.query, variables: ["q": query]))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: self.setSourceFrom)
+            if structure.graphQlUrl != nil {
+                searchDisposable = graphQlClient!
+                    .fetchData(request: GraphQlRequest(query: screen.query!, variables: ["q": query]))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: self.setSourceFrom)
+            } else {
+                searchDisposable = plainApiClient!
+                    .fetchData(request: PlainApiRequest(path: screen.apiPath!, variables: ["search": query]))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: self.setSourceFrom)
+            }
         }
     }
 }

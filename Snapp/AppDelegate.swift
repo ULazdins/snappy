@@ -45,17 +45,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        application.delegate?.window??.tintColor = mainColor
         
         UINavigationBar.appearance().prefersLargeTitles = structure.theme.prefersLargeTitles
-        
         UINavigationBar.appearance().barTintColor = secondaryColor
         UINavigationBar.appearance().tintColor = mainColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
         UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:mainColor]
-        
-        //        UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .Default)
-        
         UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
+//        UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .Default)
         
+        UISearchBar.appearance().barTintColor = secondaryColor
+        UISearchBar.appearance().tintColor = mainColor
+        // Two lines doesn't work :(
+//        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = secondaryColor
+//        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = mainColor
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
+            NSAttributedString.Key.foregroundColor: mainColor
+        ]
         
         UITabBar.appearance().barTintColor = secondaryColor
         UITabBar.appearance().tintColor = mainColor
@@ -78,4 +83,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  - drawer
  - pagination of search results
  - bez-e example config
+ - taktils pull to refresh
+ - globālā loading animācija augšā
+ 
+ Demo app:
+ - TODO app
+ - Ceļojumu gids LV
+ - Auto tēriņu uzskaites app
+ - Bez-e
+ - Zibeklis
+ - Gatves app
  */

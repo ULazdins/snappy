@@ -1,0 +1,64 @@
+{
+    "apiUrl": "https://bez-e.lv/",
+    "theme": {
+        "primaryColor":"#FFFFFF",
+        "secondaryColor": "#0FB860",
+        "prefersLargeTitles": false
+    },
+	"menu": {
+        "items": [
+            {
+                "title": "Produkti",
+                "iconName": "AppIcon",
+                "screenId": "products"
+            },
+            {
+                "title": "Vielas",
+                "iconName": "AppIcon",
+                "screenId": "substances"
+            },
+            {
+                "title": "Vēsture",
+                "iconName": "AppIcon",
+                "screenId": "history"
+            }
+		]
+	},
+	"screens": [
+		{
+			"id": "products",
+            "type": "table",
+            "title": "Produkti",
+            "apiPath": "/products/autocomplete.json",
+            "searchable": true,
+            "pathToList": "",
+            "cellKeys": {
+                "title": "[0]",
+                "subtitle": "[1]"
+            }
+		},
+        {
+            "id": "substances",
+            "type": "table",
+            "title": "Vielas",
+            "apiPath": "/substances/autocomplete.json",
+            "searchable": true,
+            "pathToList": "",
+            "cellKeys": {
+                "title": "[0]",
+                "subtitle": "[1]"
+            }
+        },
+        {
+            "id": "history",
+            "type": "table",
+            "title": "Vēsture",
+            "apiPath": "/api/history_entries.json",
+            "pathToList": "",
+            "cellKeys": {
+                "title": "[0]",
+                "subtitle": "[1]"
+            }
+        }
+	]
+}

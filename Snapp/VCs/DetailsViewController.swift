@@ -11,9 +11,11 @@ import RxSwift
 
 class DetailsViewController: UIViewController {
     var screen: DetailsStackScreen!
+    var structure: Structure!
     var parameters: [String: String] = [:]
     var mainTitle: String!
     var graphQlClient: GraphQlClient!
+    var plainApiClient: PlainApiClient!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -23,34 +25,54 @@ class DetailsViewController: UIViewController {
     
     var imageView: UIImageView! = nil
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func replaceQueryParameters(query: String) -> String {
         let pattern = #"(<\w+>)"#
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
-        let fullRange = NSRange(screen.query.startIndex..<screen.query.endIndex, in: screen.query)
-        let matches = regex.matches(in: screen.query, options: [], range: fullRange)
+        let fullRange = NSRange(query.startIndex..<query.endIndex, in: query)
+        let matches = regex.matches(in: query, options: [], range: fullRange)
         
-        var query = screen.query
+        var resultQuery = query
         for match in matches {
-            let firstCaptureRange: Range<String.Index> = Range(match.range(at: 1), in: query)!
-            let placeholder = (query)[firstCaptureRange]
+            let firstCaptureRange: Range<String.Index> = Range(match.range(at: 1), in: resultQuery)!
+            let placeholder = (resultQuery)[firstCaptureRange]
             let key: String = String(placeholder.dropFirst().dropLast())
             let value = parameters[key] ?? ""
             
-            query = query.replacingOccurrences(of: placeholder, with: value)
+            resultQuery = resultQuery.replacingOccurrences(of: placeholder, with: value)
         }
+        return resultQuery
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        _ = graphQlClient!
-            .fetchData(request: GraphQlRequest(query: query))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (data) in
-                let personDetails = data.getDict(at: self.screen.pathToDetails)
-                
-                (personDetails?["avatarUrl"] as? String)
-                    .flatMap(URL.init(string:))
-                    .map(self.imageView!.downloadImage)
-            })
+        if structure.graphQlUrl != nil {
+            let query = replaceQueryParameters(query: screen.query!)
+            
+            _ = graphQlClient!
+                .fetchData(request: GraphQlRequest(query: query))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (data) in
+                    let personDetails = traverseJson(json: data, path: self.screen.pathToDetails) as? [String: Any]
+                    
+                    (personDetails?["avatarUrl"] as? String)
+                        .flatMap(URL.init(string:))
+                        .map(self.imageView!.downloadImage)
+                })
+        } else {
+            let query = replaceQueryParameters(query: screen.apiPath!)
+            
+            _ = plainApiClient!
+                .fetchData(request: PlainApiRequest(path: query))
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onNext: { (data) in
+//                    let personDetails = data.getDict(at: self.screen.pathToDetails)
+//                    
+//                    (personDetails?["avatarUrl"] as? String)
+//                        .flatMap(URL.init(string:))
+//                        .map(self.imageView!.downloadImage)
+//                })
+        }
         
         scrollView.delegate = self
         
